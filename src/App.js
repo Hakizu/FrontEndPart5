@@ -9,6 +9,10 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [newBlog, setNewBlog] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newLikes, setNewLikes] = useState('')
+  const [newUrl, setNewUrl] = useState('')
   
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -71,6 +75,77 @@ const App = () => {
     </form>
   )
 
+  const addBlog = (event) => {
+    event.preventDefault()
+    const blogObject = {
+      title: newBlog,
+      author: newAuthor,
+      url: newUrl,
+      likes: newLikes
+    }
+
+    blogService
+      .create(blogObject)
+      .then(returnedBlog => {
+        setBlogs(blogs.concat(returnedBlog))
+        setNewBlog('')
+        setNewAuthor('')
+        setNewUrl('')
+        setNewLikes('')
+      })
+  }
+
+  const handleBlogChange = (event) => {
+    setNewBlog(event.target.value)
+  }
+  const handleAuthorChange = (event) => {
+    setNewAuthor(event.target.value)
+  }
+  const handleUrlChange = (event) => {
+    setNewUrl(event.target.value)
+  }
+  const handleLikesChange = (event) => {
+    setNewLikes(event.target.value)
+  }
+
+  const blogForm = () => (
+    <form onSubmit={addBlog}>
+    <div>
+      Blog
+      <input
+        value = {newBlog}
+        onChange = {handleBlogChange}
+        name = 'Blog'
+      />
+    </div>
+    <div>
+      Author
+      <input
+        value = {newAuthor}
+        onChange = {handleAuthorChange}
+        name = 'Author'
+      />
+    </div>
+    <div>
+      URL
+      <input
+        value = {newUrl}
+        onChange = {handleUrlChange}
+        name = 'URL'
+      />      
+    </div>
+    <div>
+      Likes
+      <input
+        value = {newLikes}
+        onChange = {handleLikesChange}
+        name = 'Likes'
+      />       
+    </div>
+    <button type='submit'>save</button>
+    </form>
+  )
+
   return (
     <div>
       <div>
@@ -88,6 +163,7 @@ const App = () => {
           {blogs.map(blog =>
             <Blog key={blog.id} blog={blog} />
           )}
+          {blogForm()}
         </div>
       }
     </div>
