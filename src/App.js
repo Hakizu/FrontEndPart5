@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import Notification from './components/Notification'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -58,16 +59,16 @@ const App = () => {
           <input
           type = 'text'
           value = {username}
-          name = 'Username'
+          name = "Username"
           onChange = {({ target }) => setUsername(target.value)}
           />
       </div>
       <div>
         Password
           <input
-          type = 'password'
+          type = 'text'
           value = {password}
-          name = 'Password'
+          name = "Password"
           onChange = {({ target }) => setPassword(target.value)}
           />
       </div>
@@ -92,20 +93,10 @@ const App = () => {
         setNewAuthor('')
         setNewUrl('')
         setNewLikes('')
+        setTimeout(() => {
+          setErrorMessage(`${newBlog} by ${newAuthor} created`)
+        }, 7000)
       })
-  }
-
-  const handleBlogChange = (event) => {
-    setNewBlog(event.target.value)
-  }
-  const handleAuthorChange = (event) => {
-    setNewAuthor(event.target.value)
-  }
-  const handleUrlChange = (event) => {
-    setNewUrl(event.target.value)
-  }
-  const handleLikesChange = (event) => {
-    setNewLikes(event.target.value)
   }
 
   const blogForm = () => (
@@ -114,7 +105,7 @@ const App = () => {
       Blog
       <input
         value = {newBlog}
-        onChange = {handleBlogChange}
+        onChange = {(event) => setNewBlog(event.target.value)}
         name = 'Blog'
       />
     </div>
@@ -122,7 +113,7 @@ const App = () => {
       Author
       <input
         value = {newAuthor}
-        onChange = {handleAuthorChange}
+        onChange = {(event) => setNewAuthor(event.target.value)}
         name = 'Author'
       />
     </div>
@@ -130,7 +121,7 @@ const App = () => {
       URL
       <input
         value = {newUrl}
-        onChange = {handleUrlChange}
+        onChange = {(event) => setNewUrl(event.target.value)}
         name = 'URL'
       />      
     </div>
@@ -138,7 +129,7 @@ const App = () => {
       Likes
       <input
         value = {newLikes}
-        onChange = {handleLikesChange}
+        onChange = {(event) => setNewLikes(event.target.value)}
         name = 'Likes'
       />       
     </div>
@@ -149,7 +140,7 @@ const App = () => {
   return (
     <div>
       <div>
-        {errorMessage}
+        <Notification message = {errorMessage}/>
       </div>
       <h2>blogs</h2>
 
