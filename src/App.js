@@ -3,6 +3,9 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
+import Loginform from './components/Loginform'
+import Toggle from './components/Toggle'
+import Blogform from './components/Blogform'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -53,27 +56,15 @@ const App = () => {
   }
 
   const loginForm = () => (
-    <form onSubmit = {handleLogin}>
-      <div>
-        Username
-          <input
-          type = 'text'
-          value = {username}
-          name = "Username"
-          onChange = {({ target }) => setUsername(target.value)}
-          />
-      </div>
-      <div>
-        Password
-          <input
-          type = 'text'
-          value = {password}
-          name = "Password"
-          onChange = {({ target }) => setPassword(target.value)}
-          />
-      </div>
-      <button type='submit'>login</button>
-    </form>
+    <Toggle buttonLabel='Login'>
+      <Loginform
+        username = {username}
+        password = {password}
+        handleUsernameChange = {({ target }) => setUsername(target.value)}
+        handlePasswordChange = {({ target }) => setPassword(target.value)}
+        handleSubmit = {handleLogin}
+      />
+    </Toggle>
   )
 
   const addBlog = (event) => {
@@ -99,42 +90,20 @@ const App = () => {
       })
   }
 
-  const blogForm = () => (
-    <form onSubmit={addBlog}>
-    <div>
-      Blog
-      <input
-        value = {newBlog}
-        onChange = {(event) => setNewBlog(event.target.value)}
-        name = 'Blog'
+  const blogForm = (event) => (
+    <Toggle buttonLabel = 'Add Blog'>
+      <Blogform 
+        addBlog = {addBlog}
+        newBlog = {newBlog}
+        newAuthor = {newAuthor}
+        newUrl = {newUrl}
+        newLikes = {newLikes}
+        handleNewBlog = {({ targe }) => setNewBlog(event.target.value)}
+        handleNewAuthor = {({ target }) => setNewAuthor(event.target.value)}
+        handleNewUrl = {({ target }) => setNewUrl(event.target.value)}
+        handleNewLikes = {({ target }) => setNewLikes(event.target.value)}
       />
-    </div>
-    <div>
-      Author
-      <input
-        value = {newAuthor}
-        onChange = {(event) => setNewAuthor(event.target.value)}
-        name = 'Author'
-      />
-    </div>
-    <div>
-      URL
-      <input
-        value = {newUrl}
-        onChange = {(event) => setNewUrl(event.target.value)}
-        name = 'URL'
-      />      
-    </div>
-    <div>
-      Likes
-      <input
-        value = {newLikes}
-        onChange = {(event) => setNewLikes(event.target.value)}
-        name = 'Likes'
-      />       
-    </div>
-    <button type='submit'>save</button>
-    </form>
+    </Toggle>
   )
 
   return (
