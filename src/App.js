@@ -99,10 +99,10 @@ const App = () => {
         newAuthor = {newAuthor}
         newUrl = {newUrl}
         newLikes = {newLikes}
-        handleNewBlog = {({ targe }) => setNewBlog(event.target.value)}
-        handleNewAuthor = {({ target }) => setNewAuthor(event.target.value)}
-        handleNewUrl = {({ target }) => setNewUrl(event.target.value)}
-        handleNewLikes = {({ target }) => setNewLikes(event.target.value)}
+        handleNewBlog = {({ target }) => setNewBlog(target.value)}
+        handleNewAuthor = {({ target }) => setNewAuthor(target.value)}
+        handleNewUrl = {({ target }) => setNewUrl(target.value)}
+        handleNewLikes = {({ target }) => setNewLikes(target.value)}
       />
     </Toggle>
   )
