@@ -17,15 +17,15 @@ const App = () => {
   const [newAuthor, setNewAuthor] = useState('')
   const [newLikes, setNewLikes] = useState('')
   const [newUrl, setNewUrl] = useState('')
-  
+
   const blogFormRef = React.createRef()
-  
+
   useEffect(() => {
     blogService.getAll().then(blogs => {
       blogs.sort((a,b) => {return b.likes - a.likes})
       setBlogs( blogs )
-    })  
-    }, [])
+    })
+  }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogUser')
@@ -35,7 +35,7 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
-    
+
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -78,7 +78,7 @@ const App = () => {
         setBlogs(blogs.concat(returnedBlog))
         setNewBlog('')
         setNewAuthor('')
-        setNewUrl('') 
+        setNewUrl('')
         setNewLikes('')
         setTimeout(() => {
           setErrorMessage(`${newBlog} by ${newAuthor} created`)
@@ -87,9 +87,9 @@ const App = () => {
   }
 
 
-  const blogForm = (event) => (
+  const blogForm = () => (
     <Toggle buttonLabel = 'Add Blog' ref={blogFormRef}>
-      <Blogform 
+      <Blogform
         addBlog = {addBlog}
         newBlog = {newBlog}
         newAuthor = {newAuthor}
@@ -118,11 +118,11 @@ const App = () => {
           <button onClick={() => {window.localStorage.clear(); setUser(null)}}>logout</button>
 
           {blogs.map(blog =>
-            
+
             <Blog key={blog.id} blog={blog} setNewLikes={setNewLikes}
               setErrorMessage={setErrorMessage} user={user}/>
           )}
-          
+
         </div>
       }
     </div>

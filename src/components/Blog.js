@@ -12,7 +12,7 @@ const Blog = ({ blog, setNewLikes, setErrorMessage, user }) => {
     marginBottom: 5
   }
   const visible = blog.user[0].username === user
-  const showDeleteForUser = { display : visible ? 'none' : ''}
+  const showDeleteForUser = { display : visible ? 'none' : '' }
 
   const updateLikes = () => {
     blog.likes += 1
@@ -23,11 +23,11 @@ const Blog = ({ blog, setNewLikes, setErrorMessage, user }) => {
       .then(() => {
         setErrorMessage('success')
         setTimeout(() => {
-        setErrorMessage(null)
+          setErrorMessage(null)
         },5000)
       })
-    }
-  
+  }
+
   const removeBlog = () => {
     if (window.confirm(`Do you want to delete ${blog.title}`)) {
       blogService
@@ -35,11 +35,11 @@ const Blog = ({ blog, setNewLikes, setErrorMessage, user }) => {
         .then(() => {
           setErrorMessage('success')
           setTimeout(() => {
-          setErrorMessage(null)
+            setErrorMessage(null)
           },5000)
         })
-      }
     }
+  }
 
   return (
     <div style={blogStyle}>
