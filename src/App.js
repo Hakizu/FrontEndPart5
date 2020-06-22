@@ -19,9 +19,10 @@ const App = () => {
   const [newUrl, setNewUrl] = useState('')
   
   useEffect(() => {
-    blogService.getAll().then(blogs =>
+    blogService.getAll().then(blogs => {
+      blogs.sort((a,b) => {return b.likes - a.likes})
       setBlogs( blogs )
-      )  
+    })  
     }, [])
 
   useEffect(() => {
@@ -121,6 +122,7 @@ const App = () => {
           <button onClick={() => {window.localStorage.clear(); setUser(null)}}>logout</button>
 
           {blogs.map(blog =>
+            
             <Blog key={blog.id} blog={blog} setNewLikes={setNewLikes}
               setErrorMessage={setErrorMessage}/>
           )}
