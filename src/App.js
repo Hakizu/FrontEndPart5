@@ -121,7 +121,8 @@ const App = () => {
           <button onClick={() => {window.localStorage.clear(); setUser(null)}}>logout</button>
 
           {blogs.map(blog =>
-            <Blog key={blog.id} blog={blog}/>
+            <Blog key={blog.id} blog={blog} setNewLikes={setNewLikes}
+              setErrorMessage={setErrorMessage}/>
           )}
           {blogForm()}
         </div>
