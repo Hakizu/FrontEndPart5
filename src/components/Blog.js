@@ -1,4 +1,4 @@
-import React, { useState }from 'react'
+import React from 'react'
 import Toggle from './Toggle'
 import blogService from '../services/blogs'
 
@@ -50,7 +50,6 @@ const Blog = ({ blog, setNewLikes, setErrorMessage, user }) => {
           <ul>{blog.likes}
             <button onClick={updateLikes}>Like</button>
           </ul>
-          {console.log(blog.user[0].username)}
           <div style={showDeleteForUser}>
             <button onClick={removeBlog}>Delete Note</button>
           </div>
