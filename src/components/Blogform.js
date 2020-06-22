@@ -10,11 +10,22 @@ const Blogform = ({
   handleNewAuthor,
   handleNewUrl,
   handleNewLikes,
-}) =>  {
+}) => {
+
+  const addingNewBlog = (event) => {
+    event.preventDefault()
+    addBlog({    
+      title: newBlog,
+      author: newAuthor,
+      url: newUrl,
+      likes: newLikes
+    })
+  }
+
   return (
     <div>
       <h3>Create new Blog entry</h3>
-      <form onSubmit={addBlog}>
+      <form onSubmit={addingNewBlog}>
       <div>
         Blog
         <input

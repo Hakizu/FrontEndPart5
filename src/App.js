@@ -18,6 +18,8 @@ const App = () => {
   const [newLikes, setNewLikes] = useState('')
   const [newUrl, setNewUrl] = useState('')
   
+  const blogFormRef = React.createRef()
+  
   useEffect(() => {
     blogService.getAll().then(blogs => {
       blogs.sort((a,b) => {return b.likes - a.likes})
@@ -68,22 +70,15 @@ const App = () => {
     </Toggle>
   )
 
-  const addBlog = (event) => {
-    event.preventDefault()
-    const blogObject = {
-      title: newBlog,
-      author: newAuthor,
-      url: newUrl,
-      likes: newLikes
-    }
-
+  const addBlog = (blogObject) => {
+    blogFormRef.current.toggleVisibility()
     blogService
       .create(blogObject)
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))
         setNewBlog('')
         setNewAuthor('')
-        setNewUrl('')
+        setNewUrl('') 
         setNewLikes('')
         setTimeout(() => {
           setErrorMessage(`${newBlog} by ${newAuthor} created`)
@@ -91,8 +86,9 @@ const App = () => {
       })
   }
 
+
   const blogForm = (event) => (
-    <Toggle buttonLabel = 'Add Blog'>
+    <Toggle buttonLabel = 'Add Blog' ref={blogFormRef}>
       <Blogform 
         addBlog = {addBlog}
         newBlog = {newBlog}
@@ -118,15 +114,15 @@ const App = () => {
         loginForm() :
         <div>
           <p>{user.name} logged in </p>
-
+          {blogForm()}
           <button onClick={() => {window.localStorage.clear(); setUser(null)}}>logout</button>
 
           {blogs.map(blog =>
             
             <Blog key={blog.id} blog={blog} setNewLikes={setNewLikes}
-              setErrorMessage={setErrorMessage}/>
+              setErrorMessage={setErrorMessage} user={user}/>
           )}
-          {blogForm()}
+          
         </div>
       }
     </div>

@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState }from 'react'
 import Toggle from './Toggle'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, setNewLikes, setErrorMessage }) => {
+
+const Blog = ({ blog, setNewLikes, setErrorMessage, user }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -10,6 +11,8 @@ const Blog = ({ blog, setNewLikes, setErrorMessage }) => {
     borderWidth: 1,
     marginBottom: 5
   }
+  const visible = blog.user[0].username === user
+  const showDeleteForUser = { display : visible ? 'none' : ''}
 
   const updateLikes = () => {
     blog.likes += 1
@@ -25,17 +28,34 @@ const Blog = ({ blog, setNewLikes, setErrorMessage }) => {
       })
     }
   
+  const removeBlog = () => {
+    if (window.confirm(`Do you want to delete ${blog.title}`)) {
+      blogService
+        .remove(blog.id)
+        .then(() => {
+          setErrorMessage('success')
+          setTimeout(() => {
+          setErrorMessage(null)
+          },5000)
+        })
+      }
+    }
 
   return (
     <div style={blogStyle}>
-      <ul>{blog.title}</ul>
+      <div>{blog.title}
         <Toggle buttonLabel='View'>
           <ul>{blog.author}</ul>
           <ul>{blog.url}</ul>
           <ul>{blog.likes}
             <button onClick={updateLikes}>Like</button>
           </ul>
+          {console.log(blog.user[0].username)}
+          <div style={showDeleteForUser}>
+            <button onClick={removeBlog}>Delete Note</button>
+          </div>
         </Toggle>
+      </div>
     </div>
   )
 }

@@ -27,10 +27,14 @@ const create = async newObject => {
   return response.data
 }
 
-const remove = async (id) => {
-  const request = await axios.delete(`${baseUrl}/${id}`)
+const remove = (id) => {
+  const config = {
+    headers: { Authorization: token}
+  }
 
-  return request.data
+  const request = axios.delete(`${baseUrl}/${id}`,config)
+
+  return request.then(response => response.data)
 }
 
 export default { getAll, create, update, remove, setToken }
