@@ -43,11 +43,11 @@ const Blog = ({ blog, setNewLikes, setErrorMessage, user }) => {
 
   return (
     <div style={blogStyle}>
-      <div>{blog.title}
+      <div className='blog'>{blog.title}
         <Toggle buttonLabel='View'>
-          <ul>{blog.author}</ul>
-          <ul>{blog.url}</ul>
-          <ul>{blog.likes}
+          <ul className='author'>{blog.author}</ul>
+          <ul className='url'>{blog.url}</ul>
+          <ul className='likes'>{blog.likes}
             <button onClick={updateLikes}>Like</button>
           </ul>
           <div style={showDeleteForUser}>
