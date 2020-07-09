@@ -1,25 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const Blogform = ({
-  addBlog,
-  newBlog,
-  newAuthor,
-  newUrl,
-  newLikes,
-  handleNewBlog,
-  handleNewAuthor,
-  handleNewUrl,
-  handleNewLikes,
-}) => {
+const Blogform = ({ addBlog }) => {
+  const [newBlog, setNewBlog] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newLikes, setNewLikes] = useState('')
+  const [newUrl, setNewUrl] = useState('')
 
   const addingNewBlog = (event) => {
     event.preventDefault()
-    addBlog({
+    const blogObject ={
       title: newBlog,
       author: newAuthor,
       url: newUrl,
       likes: newLikes
-    })
+    }
+
+    addBlog(blogObject)
+    setNewBlog('')
+    setNewAuthor('')
+    setNewUrl('')
+    setNewLikes('')
   }
 
   return (
@@ -29,32 +29,40 @@ const Blogform = ({
         <div>
         Blog
           <input
+            id='blog'
+            type='text'
             value = {newBlog}
-            onChange = {handleNewBlog}
+            onChange = {({ target }) => setNewBlog(target.value)}
             name = 'Blog'
           />
         </div>
         <div>
         Author
           <input
+            id='author'
+            type='text'
             value = {newAuthor}
-            onChange = {handleNewAuthor}
+            onChange = {({ target }) => setNewAuthor(target.value)}
             name = 'Author'
           />
         </div>
         <div>
         URL
           <input
+            id='url'
+            type='text'
             value = {newUrl}
-            onChange = {handleNewUrl}
+            onChange = {({ target }) => setNewUrl(target.value)}
             name = 'URL'
           />
         </div>
         <div>
         Likes
           <input
+            id='likes'
+            type='text'
             value = {newLikes}
-            onChange = {handleNewLikes}
+            onChange = {({ target }) => setNewLikes(target.value)}
             name = 'Likes'
           />
         </div>

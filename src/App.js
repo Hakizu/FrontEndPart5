@@ -18,8 +18,6 @@ const App = () => {
   const [newLikes, setNewLikes] = useState('')
   const [newUrl, setNewUrl] = useState('')
 
-  const blogFormRef = React.createRef()
-
   useEffect(() => {
     blogService.getAll().then(blogs => {
       blogs.sort((a,b) => {return b.likes - a.likes})
@@ -58,18 +56,6 @@ const App = () => {
     }
   }
 
-  const loginForm = () => (
-    <Toggle buttonLabel='Login'>
-      <Loginform
-        username = {username}
-        password = {password}
-        handleUsernameChange = {({ target }) => setUsername(target.value)}
-        handlePasswordChange = {({ target }) => setPassword(target.value)}
-        handleSubmit = {handleLogin}
-      />
-    </Toggle>
-  )
-
   const updateLikes = (blog) => {
     blog.likes += 1
 
@@ -83,39 +69,22 @@ const App = () => {
       })
   }
 
+  const addBlog = async (blogObject) => {
 
-  const addBlog = (blogObject) => {
-    blogFormRef.current.toggleVisibility()
-    blogService
-      .create(blogObject)
-      .then(returnedBlog => {
-        setBlogs(blogs.concat(returnedBlog))
-        setNewBlog('')
-        setNewAuthor('')
-        setNewUrl('')
-        setNewLikes('')
-        setTimeout(() => {
-          setErrorMessage(`${newBlog} by ${newAuthor} created`)
-        }, 7000)
-      })
+    try {
+      const returnedBlog = await blogService
+        .create(blogObject)
+      setBlogs(blogs.concat(returnedBlog))
+      setTimeout(() => {
+        setErrorMessage(`${newBlog} by ${newAuthor} created`)
+      }, 7000)
+    } catch (error) {
+      setErrorMessage(error)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
   }
-
-
-  const blogForm = () => (
-    <Toggle buttonLabel = 'Add Blog' ref={blogFormRef}>
-      <Blogform
-        addBlog = {addBlog}
-        newBlog = {newBlog}
-        newAuthor = {newAuthor}
-        newUrl = {newUrl}
-        newLikes = {newLikes}
-        handleNewBlog = {({ target }) => setNewBlog(target.value)}
-        handleNewAuthor = {({ target }) => setNewAuthor(target.value)}
-        handleNewUrl = {({ target }) => setNewUrl(target.value)}
-        handleNewLikes = {({ target }) => setNewLikes(target.value)}
-      />
-    </Toggle>
-  )
 
   return (
     <div>
@@ -125,20 +94,35 @@ const App = () => {
       <h2>blogs</h2>
 
       {user === null ?
-        loginForm() :
-        <div>
-          <p>{user.name} logged in </p>
-          {blogForm()}
-          <button onClick={() => {window.localStorage.clear(); setUser(null)}}>logout</button>
+        (<Loginform
+          username = {username}
+          password = {password}
+          handleUsernameChange = {({ target }) => setUsername(target.value)}
+          handlePasswordChange = {({ target }) => setPassword(target.value)}
+          handleSubmit = {handleLogin} />
+        ) : (
+          <div>
+            <p>{user.name} logged in </p>
+            <button onClick={() => {window.localStorage.clear(); setUser(null)}}>logout</button>
+            <Toggle buttonLabel='Post new blog'>
+              <h2>Create new entry</h2>
+              <Blogform
+                addBlog={addBlog}
+              />
+            </Toggle>
+            {blogs.map(blog => (
+              <Blog
+                key={blog.id}
+                blog={blog}
+                updateLikes={updateLikes}
+                setNewLikes={setNewLikes}
+                setErrorMessage={setErrorMessage}
+                user={user}
+              />
+            ))}
 
-          {blogs.map(blog =>
-
-            <Blog key={blog.id} blog={blog} updateLikes={updateLikes} setNewLikes={setNewLikes}
-              setErrorMessage={setErrorMessage} user={user}/>
-          )}
-
-        </div>
-      }
+          </div>
+        )}
     </div>
   )
 }

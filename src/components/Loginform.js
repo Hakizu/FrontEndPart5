@@ -6,29 +6,29 @@ const Loginform = ({
   handlePasswordChange,
   username,
   password
-  }) => {
-  
-    return (
-      <div>
-        <h2>Login</h2>
-        <form onSubmit = {handleSubmit}>
+}) => {
+
+  return (
+    <div>
+      <h2>Login</h2>
+      <form onSubmit = {handleSubmit}>
         <div>
             Username
-            <input
-              type = 'text'
-              value = {username}
-              name = "Username"
-              onChange = {handleUsernameChange}
-            />
+          <input
+            type = 'text'
+            value = {username}
+            name = "Username"
+            onChange = {handleUsernameChange}
+          />
         </div>
         <div>
           Password
-            <input
-              type = 'text'
-              value = {password}
-              name = "Password"
-              onChange = {handlePasswordChange}
-            />
+          <input
+            type = 'text'
+            value = {password}
+            name = "Password"
+            onChange = {handlePasswordChange}
+          />
         </div>
         <button type='submit'>login</button>
       </form>
