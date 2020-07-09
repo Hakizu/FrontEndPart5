@@ -28,7 +28,7 @@ test('<BlogForm /> updates parent state and calls onSubmit', () => {
   fireEvent.submit(form)
 
   expect(mockHandler.mock.calls).toHaveLength(1)
-  expect(mockHandler.mock.calls[0][0].blog).toBe('Jest')
+  expect(mockHandler.mock.calls[0][0].title).toBe('Jest')
   expect(mockHandler.mock.calls[0][0].author).toBe('haki')
   expect(mockHandler.mock.calls[0][0].url).toBe('jest.org')
 })
