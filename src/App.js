@@ -70,6 +70,20 @@ const App = () => {
     </Toggle>
   )
 
+  const updateLikes = (blog) => {
+    blog.likes += 1
+
+    blogService
+      .update(blog, blog.id)
+      .then(() => {
+        setErrorMessage('success')
+        setTimeout(() => {
+          setErrorMessage(null)
+        },300)
+      })
+  }
+
+
   const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
     blogService
@@ -119,7 +133,7 @@ const App = () => {
 
           {blogs.map(blog =>
 
-            <Blog key={blog.id} blog={blog} setNewLikes={setNewLikes}
+            <Blog key={blog.id} blog={blog} updateLikes={updateLikes} setNewLikes={setNewLikes}
               setErrorMessage={setErrorMessage} user={user}/>
           )}
 

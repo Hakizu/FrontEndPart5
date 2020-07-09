@@ -23,6 +23,28 @@ test('renders content', () => {
   )
 })
 
+test('click like button twice', () => {
+  const blog = {
+    user: [{
+      username: 'testUser',
+      name: 'tester'
+    }],
+    title: 'new Blog',
+    author: 'new Author',
+    likes: 1
+  }
+
+  const mockHandler = jest.fn()
+  const component = render(
+    <Blog blog={blog} updateLikes={mockHandler}/>
+  )
+
+  const button = component.getByText('Like')
+  fireEvent.click(button)
+
+  expect(mockHandler.mock.calls).toHaveLength(1)
+})
+
 
 describe('<Toggle />', () => {
   let component
