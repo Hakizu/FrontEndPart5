@@ -1,3 +1,5 @@
+const { checkPropTypes } = require("prop-types")
+
 describe('Blog app', function () {
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3001/api/testing/reset')
@@ -31,7 +33,7 @@ describe('Blog app', function () {
     })
   })
 
-  describe.only('When logged in', function () {
+  describe('When logged in', function () {
     beforeEach(function () {
       cy.Login({ username: 'hakizu', password: 'salts' })
       cy.contains('Hakizu logged in')
@@ -64,6 +66,26 @@ describe('Blog app', function () {
 
       cy.visit('http://localhost:3000')
       cy.get('html').should('not.contain', 'a cypress blog')
+    })
+  })
+  describe.only('Are blogs sorted via likes', function() {
+    beforeEach(function() {
+      cy.Login({ username: 'hakizu', password: 'salts' })
+      cy.contains('Hakizu logged in')
+    })
+
+    it('Creation and sorting', function() {
+      cy.createBlog({ blog: 'third', url: 'third.com', likes: 1000 })
+      cy.createBlog({ blog: 'fourth', url: 'fourth.com', likes: 1 })
+      cy.createBlog({ blog: 'first', url: 'first.com', likes: 2000 })
+      cy.createBlog({ blog: 'second', url: 'second.com', likes: 1500 })
+
+      cy.get('.allBlogs').then(blogs => {
+        cy.wrap(blogs[0]).contains(2000)
+        cy.wrap(blogs[1]).contains(1500)
+        cy.wrap(blogs[2]).contains(1000)
+        cy.wrap(blogs[3]).contains(1)
+      })
     })
   })
 })

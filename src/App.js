@@ -112,17 +112,18 @@ const App = () => {
                 addBlog={addBlog}
               />
             </Toggle>
-            {blogs.map(blog => (
-              <Blog
-                key={blog.id}
-                blog={blog}
-                updateLikes={updateLikes}
-                setNewLikes={setNewLikes}
-                setErrorMessage={setErrorMessage}
-                user={user}
-              />
-            ))}
-
+            <div className='allBlogs'>
+              {blogs.map(blog => (
+                <Blog
+                  key={blog.id}
+                  blog={blog}
+                  updateLikes={updateLikes}
+                  setNewLikes={setNewLikes}
+                  setErrorMessage={setErrorMessage}
+                  user={user}
+                />
+              ))}
+            </div>
           </div>
         )}
     </div>
