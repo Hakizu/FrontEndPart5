@@ -37,7 +37,7 @@ const Blog = ({ blog, updateLikes, setErrorMessage, user }) => {
             <button onClick={() => updateLikes(blog)} className='likeButton' data-cy='likeButton'>Like</button>
           </ul>
           <div style={showDeleteForUser}>
-            <button onClick={removeBlog}>Delete Note</button>
+            <button onClick={removeBlog} data-cy='deleteBlogButton'>Delete Blog</button>
           </div>
         </Toggle>
       </div>

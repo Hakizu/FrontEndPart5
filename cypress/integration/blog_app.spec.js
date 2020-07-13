@@ -49,14 +49,21 @@ describe('Blog app', function () {
       cy.contains('a cypress blog')
     })
     it('User can like an existing blog', function () {
-      cy.get('#newBlogButton').click()
-
-      cy.createBlog({ blog:'a cypress blog', author: 'The Cypress Team', 
+      cy.createBlog({ blog:'a cypress blog', author: 'The Cypress Team',
         url: 'https://docs.cypress.io', likes: '99' })
 
       cy.contains('a cypress blog')
       cy.get('#viewButton').click()
       cy.get('[data-cy=likeButton]').click()
+    })
+    it('User can delete blog', function () {
+      cy.createBlog({ blog:'a cypress blog', author: 'The Cypress Team',
+        url: 'https://docs.cypress.io', likes: '99' })
+      cy.get('#viewButton').click()
+      cy.get('[data-cy=deleteBlogButton]').click()
+
+      cy.visit('http://localhost:3000')
+      cy.get('html').should('not.contain', 'a cypress blog')
     })
   })
 })
