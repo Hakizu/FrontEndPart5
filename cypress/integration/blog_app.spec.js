@@ -31,12 +31,15 @@ describe('Blog app', function () {
     })
   })
 
-  describe('When logged in', function () {
-    it('Logged in User can create Blog', function() {
+  describe.only('When logged in', function () {
+    beforeEach(function () {
       cy.Login({ username: 'hakizu', password: 'salts' })
       cy.contains('Hakizu logged in')
+    })
 
+    it('User can create Blog', function() {
       cy.get('#newBlogButton').click()
+
       cy.get('[data-cy = blogInput]').type('a cypress blog')
       cy.get('[data-cy = authorInput]').type('The Cyress Team')
       cy.get('[data-cy = urlInput]').type('https://docs.cypress.io/')
@@ -44,6 +47,16 @@ describe('Blog app', function () {
       cy.get('[data-cy = saveBlogButton]').click()
 
       cy.contains('a cypress blog')
+    })
+    it('User can like an existing blog', function () {
+      cy.get('#newBlogButton').click()
+
+      cy.createBlog({ blog:'a cypress blog', author: 'The Cypress Team', 
+        url: 'https://docs.cypress.io', likes: '99' })
+
+      cy.contains('a cypress blog')
+      cy.get('#viewButton').click()
+      cy.get('[data-cy=likeButton]').click()
     })
   })
 })

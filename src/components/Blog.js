@@ -30,11 +30,11 @@ const Blog = ({ blog, updateLikes, setErrorMessage, user }) => {
   return (
     <div style={blogStyle}>
       <div className='blog'>{blog.title}
-        <Toggle buttonLabel='View'>
+        <Toggle buttonLabel='View' id='viewButton'>
           <ul className='author'>Title: {blog.author}</ul>
           <ul className='url'>URL: {blog.url}</ul>
           <ul className='likes'>Likes: {blog.likes}
-            <button onClick={() => updateLikes(blog)} className='likeButton'>Like</button>
+            <button onClick={() => updateLikes(blog)} className='likeButton' data-cy='likeButton'>Like</button>
           </ul>
           <div style={showDeleteForUser}>
             <button onClick={removeBlog}>Delete Note</button>

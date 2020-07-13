@@ -7,6 +7,23 @@ Cypress.Commands.add('Login', ({ username, password }) => {
     cy.visit('http://localhost:3000')
   })
 })
+
+Cypress.Commands.add('createBlog', ({ blog, author, url, likes }) => {
+  cy.request({
+    url:'http://localhost:3001/api/blogs',
+    method: 'POST',
+    body: {
+      title: blog,
+      author: author,
+      url: url,
+      likes: likes
+    },
+    headers: {
+      'Authorization': `bearer ${JSON.parse(localStorage.getItem('loggedBlogUser')).token}`
+    }
+  })
+  cy.visit('http://localhost:3000')
+})
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
