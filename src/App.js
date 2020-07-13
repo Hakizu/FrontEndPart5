@@ -69,8 +69,10 @@ const App = () => {
       })
   }
 
-  const addBlog = async (blogObject) => {
+  const blogFormRef = React.createRef()
 
+  const addBlog = async (blogObject) => {
+    blogFormRef.current.toggleVisibility()
     try {
       const returnedBlog = await blogService
         .create(blogObject)
@@ -104,7 +106,7 @@ const App = () => {
           <div>
             <p>{user.name} logged in </p>
             <button onClick={() => {window.localStorage.clear(); setUser(null)}}>logout</button>
-            <Toggle buttonLabel='Post new blog'>
+            <Toggle buttonLabel='Post new blog' id='newBlogButton' ref={blogFormRef}>
               <h2>Create new entry</h2>
               <Blogform
                 addBlog={addBlog}

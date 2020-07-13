@@ -31,6 +31,7 @@ const Blogform = ({ addBlog }) => {
           <input
             id='blog'
             type='text'
+            data-cy='blogInput'
             value = {newBlog}
             onChange = {({ target }) => setNewBlog(target.value)}
             name = 'Blog'
@@ -41,6 +42,7 @@ const Blogform = ({ addBlog }) => {
           <input
             id='author'
             type='text'
+            data-cy='authorInput'
             value = {newAuthor}
             onChange = {({ target }) => setNewAuthor(target.value)}
             name = 'Author'
@@ -51,6 +53,7 @@ const Blogform = ({ addBlog }) => {
           <input
             id='url'
             type='text'
+            data-cy='urlInput'
             value = {newUrl}
             onChange = {({ target }) => setNewUrl(target.value)}
             name = 'URL'
@@ -61,12 +64,13 @@ const Blogform = ({ addBlog }) => {
           <input
             id='likes'
             type='text'
+            data-cy='likesInput'
             value = {newLikes}
             onChange = {({ target }) => setNewLikes(target.value)}
             name = 'Likes'
           />
         </div>
-        <button type='submit'>save</button>
+        <button type='submit' data-cy='saveBlogButton' >save</button>
       </form>
     </div>
   )
